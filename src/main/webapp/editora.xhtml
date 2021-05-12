@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Fema</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<ul>
+		<li><h:link value="Livro" outcome="livro" /></li>
+		<li><h:link value="Categoria" outcome="categoria" /></li>
+		<li><h:link value="Editora" outcome="editora" /></li>
+	</ul>
+	<h:form id="formEditora">
+		<h:outputLabel style="color: blue; font-size: 22px" value="Editora">
+		</h:outputLabel>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Cod: </h:outputLabel>
+		<h:inputText value="#{controlador.editora.cod}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Nome: </h:outputLabel>
+		<h:inputText value="#{controlador.editora.nome }"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Categoria: </h:outputLabel>
+		<h:selectOneMenu value="#{controlador.categoriaSelecionado}">
+			<f:selectItems value="#{controlador.categorias}" var="cat" itemValue="#{cat.cod}" itemLabel="#{cat.nome}"> </f:selectItems>
+		</h:selectOneMenu>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Localidade: </h:outputLabel>
+		<h:selectOneMenu value="#{controlador.editora.localidade}">
+			<f:selectItems value="#{controlador.locals}" var="pais"
+				itemValue="#{pais}" itemLabel="#{pais}">
+			</f:selectItems>
+		</h:selectOneMenu>
+		<br></br>
+		<br></br>
+ 
+		<h:commandButton value="Adicionar Categoria"
+			action="#{controlador.addEditora}">
+			<f:ajax execute="@form" render="@form">
+			</f:ajax>
+		</h:commandButton>
+		<br />
+		<br />
+
+		<h:dataTable id="tabelaEditoras"
+			rendered="#{controlador.isMostrarTableEditoras()}" border="1"
+			value="#{controlador.editoras}" var="editora">
+			<h:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Código">
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{editora.cod}"></h:outputText>
+			</h:column>
+			<h:column id="column2">
+				<f:facet name="header">
+					<h:outputText value="Nome">
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{editora.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column3">
+				<f:facet name="header">
+					<h:outputText value="Categoria">
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{editora.categoria.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column4">
+				<f:facet name="header">
+					<h:outputText value="Localidade"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{editora.localidade}"></h:outputText>
+			</h:column>
+
+			<h:column id="column8">
+				<f:facet name="header">
+					<h:outputText value="Remover"></h:outputText>
+				</f:facet>
+				<h:commandButton style="color: red"
+					action="#{controlador.removerEditora(editora)}" label="X">
+					<f:ajax execute="@this" render="@form">
+					</f:ajax>
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+
+	</h:form>
+</h:body>
+</html>

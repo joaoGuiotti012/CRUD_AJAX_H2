@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Fema</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+
+	<ul>
+		<li><h:link value="Livro" outcome="livro" /></li>
+		<li><h:link value="Categoria" outcome="categoria" /></li>
+		<li><h:link value="Editora" outcome="editora" /></li>
+	</ul>
+
+	<h:form id="formCategoria">
+
+		<h:outputLabel style="color: blue; font-size: 22px"
+			value="Categorias">
+		</h:outputLabel>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Código: </h:outputLabel>
+		<br></br>
+		<h:inputText id="cod" value="#{controlador.categoria.cod}"
+			readonly="true">
+		</h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Nome: </h:outputLabel>
+		<br></br>
+		<h:inputText value="#{controlador.categoria.nome}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Observação: </h:outputLabel>
+		<br></br>
+		<h:inputTextarea value="#{controlador.categoria.descricao}"></h:inputTextarea>
+		<br></br>
+		<br></br>
+
+		<h:commandButton value="Adicionar Categoria"
+			action="#{controlador.addCategoria}">
+			<f:ajax execute="@form" render="@form">
+			</f:ajax>
+		</h:commandButton>
+		<br />
+		<br />
+
+		<h:dataTable id="tabelaCategorias"
+			rendered="#{controlador.isMostrarTableCategorias()}" border="1"
+			value="#{controlador.categorias}" var="cat">
+			<h:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Código">
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{cat.cod}"></h:outputText>
+			</h:column>
+			<h:column id="column2">
+				<f:facet name="header">
+					<h:outputText value="Nome">
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{cat.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column3">
+				<f:facet name="header">
+					<h:outputText value="Observação"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{cat.descricao}"></h:outputText>
+			</h:column>
+
+			<h:column id="column8">
+				<f:facet name="header">
+					<h:outputText value="Remover"></h:outputText>
+				</f:facet>
+				<h:commandButton style="color: red"
+					action="#{controlador.removerCategoria(cat)}" label="X">
+					<f:ajax execute="@this" render="@form">
+					</f:ajax>
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+
+
+
+	</h:form>
+</h:body>
+</html>

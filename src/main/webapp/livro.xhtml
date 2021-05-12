@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Mostrar Livros - FEMA</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+
+	<ul>
+		<li><h:link value="Livro" outcome="livro" /></li>
+		<li><h:link value="Categoria" outcome="categoria" /></li>
+		<li><h:link value="Editora" outcome="editora" /></li>
+	</ul>
+
+	<h:form id="form">
+	
+		<h:outputLabel style="color: blue; font-size: 22px" value="Livros">
+		</h:outputLabel>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Código: </h:outputLabel>
+		<br></br>
+		<h:inputText value="#{controlador.livro.cod}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Nome: </h:outputLabel>
+		<br></br>
+		<h:inputText value="#{controlador.livro.nome}"></h:inputText>
+		<br></br>
+		<br></br>
+		<!-- h:outputLabel> Categoria: </h:outputLabel>
+		<br></br>
+		< h:selectOneMenu value="#{controlador.categoriaSelecionado}">
+			<f:selectItems value="#{controlador.categorias}" var="cat" itemValue="#{cat.cod}" itemLabel="#{cat.nome}"> </f:selectItems>
+		</h:selectOneMenu>
+		<br></br>
+		<br></br>-->
+		
+		<h:outputLabel> Editora: </h:outputLabel>
+		<br></br>
+		<h:selectOneMenu value="#{controlador.editoraSelecionada}">
+			<f:selectItems value="#{controlador.editoras}" var="editora" itemValue="#{editora.cod}" itemLabel="#{editora.nome}"> </f:selectItems>
+		</h:selectOneMenu>
+
+		<br></br>
+		<br></br>
+		<h:outputLabel> Resumo: </h:outputLabel>
+		<br></br>
+		<h:inputTextarea value="#{controlador.livro.resumo}"></h:inputTextarea>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Autor: </h:outputLabel>
+		<br></br>
+		<h:inputText value="#{controlador.livro.autor}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Páginas: </h:outputLabel>
+		<br></br>
+		<h:inputText type="numeric" value="#{controlador.livro.qtdPaginas}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:outputLabel> Quantidade em estoque? </h:outputLabel>
+		<br></br>
+		<h:inputText type="numeric" value="#{controlador.livro.qtd}"></h:inputText>
+		<br></br>
+		<br></br>
+		<h:commandButton value="Adicionar Livro" action="#{controlador.addLivro}">
+			<f:ajax execute="@form" render="@form">  </f:ajax>
+		</h:commandButton>
+		<br />
+		<br />
+
+		<h:dataTable id="tabelaLivros" rendered="#{controlador.isMostrarTable()}" border="1" value="#{controlador.livros}" var="liv">
+			<h:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Nome">						
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column2">
+				<f:facet name="header">
+					<h:outputText value="Categoria">						
+					</h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.editora.categoria.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column3">
+				<f:facet name="header">
+					<h:outputText value="Autor"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.autor}"></h:outputText>
+			</h:column>
+			<h:column id="column4">
+				<f:facet name="header">
+					<h:outputText value="Editora"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.editora.nome}"></h:outputText>
+			</h:column>
+			<h:column id="column5">
+				<f:facet name="header">
+					<h:outputText value="Resumo"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.resumo}"></h:outputText>
+			</h:column>
+			<h:column id="column6">
+				<f:facet name="header">
+					<h:outputText value="Páginas"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.qtdPaginas}"></h:outputText>
+			</h:column>
+			<h:column id="column7">
+				<f:facet name="header">
+					<h:outputText value="Quantidade"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{liv.qtd}"></h:outputText>
+			</h:column>
+			<h:column id="column8">
+				<f:facet name="header">
+					<h:outputText value="Disponivel"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{controlador.isEstoqueTxt(liv)}"></h:outputText>
+			</h:column>
+			
+			<h:column id="column9">
+				<f:facet name="header">
+					<h:outputText style="color: red" value="Remover"></h:outputText>
+				</f:facet>
+				<h:commandButton style="color: red" action="#{controlador.remover(liv)}" label="Remover">
+					<f:ajax execute="@this" render="@form"> </f:ajax>
+				</h:commandButton>
+				
+			</h:column>
+			
+			<h:column id="column10">
+				<f:facet name="header">
+					<h:outputText style="color: green" value="Vender"></h:outputText>
+				</f:facet>
+				<h:commandButton style="color: green" action="#{controlador.venderLivro(liv)}" label="Vender">
+					<f:ajax execute="@this" render="@form"> </f:ajax>
+				</h:commandButton>
+			</h:column>
+			
+		</h:dataTable>
+
+	</h:form>
+
+
+
+</h:body>
+</html>
